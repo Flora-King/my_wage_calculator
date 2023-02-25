@@ -40,7 +40,7 @@ def get_tax_code():
 
 def extract_tax_free_from_tax_code(tax_code):
     """ 
-    Derives the tax free amount by multiplying by the tax code numbers by 10 
+    Returns the tax free amount by multiplying by the numbers in tax code by 10 
     """
     cleaned_tax_code = tax_code[:4]
     tax_free_amount = int(cleaned_tax_code) * 10
@@ -53,24 +53,31 @@ def get_annual_salary():
     """
     annual_salary = input("Enter your annual salary here: \n")
     print(f"Your annual salary is: {annual_salary}")
+    
     return  annual_salary
 
 
 def workout_tax_breakdown(tax_free_amount, annual_salary):
     """
-    Works out tax breakdown using the tax code, the derived tax free amount and the annual salary entered.
+    Worksout tax breakdown using the tax code, the derived tax free amount and the annual salary entered.
     """
-    tax_free_amount = int(tax_code[:4]) * 10
 
     tax_breakdown = []
-    amt_to_rate = annual_salary - tax_free_amount
-    if amt_to_rate in range(12,571, 50,270):
-        tax_rate = amt_to_rate * 0.2
 
-    elif amt_to_rate in range(50,271, 150,000):
-        tax_rate = amt_to_rate * 0.4
-    else:
-        tax_rate = amt_to_rate * 0.45
+    amt_to_rate = int(annual_salary) - int(tax_free_amount)
+
+    for amt_to_rate in range(12571, 150000):
+        if (amt_to_rate > 12571 and amt_to_rate < 50270):
+            tax_rate = amt_to_rate * 0.2
+
+        elif amt_to_rate in range(50271, 150000):
+            tax_rate = amt_to_rate * 0.4
+
+        else:
+            tax_rate = amt_to_rate * 0.45
+
+    print(f"Tax deducted is: {tax_breakdown}")
+
     return tax_breakdown
 
 
@@ -90,9 +97,17 @@ def give_results(tax_code, annual_salary, tax, national_insurance, take_home):
 
 
 def main():
-"""
-Runs all program functions
-"""
+    """
+    Runs all program functions
+    """
+
     show_menu()
-    get_annual_salary()
+    #get_tax_code()
+    annual_salary = get_annual_salary()
+    #get_annual_salary()
+    tax_code = get_tax_code()
+    tax_free_amount = extract_tax_free_from_tax_code(tax_code)
     workout_tax_breakdown(tax_free_amount, annual_salary)
+
+
+main()
