@@ -63,8 +63,9 @@ def get_annual_salary():
 
 def workout_tax_breakdown(tax_free_amount, annual_salary):
     """
-    Worksout tax breakdown using the tax code, the derived tax free amount and
-    the annual salary entered.
+    Works out taxable income by subtracting annual salary and tax free amount.
+    Then works out the basic tax rate, high tax rate and Higher tax rate.
+    Finally returns total tax deducted which is the sum of all the tax rates.
     """
     tax_deducted = int()
 
@@ -72,20 +73,25 @@ def workout_tax_breakdown(tax_free_amount, annual_salary):
     high_rate = int()
     higher_rate = int()
 
-    for annual_salary in range(0, 150000):
-        if annual_salary in range(0, 12571):
-            zero_rate = int(0)
-        elif annual_salary in range(12571, 50270):
-            basic_rate = annual_salary * 0.20
+    taxable_income = int(annual_salary) - int(tax_free_amount)
 
-        elif annual_salary in range(50271, 150000):
-            high_rate = (annual_salary - basic_rate) * 0.40
+    for taxable_income in range(0, 150000):
+
+        if taxable_income in range(0, 12571):
+            zero_rate = int(0)
+
+        elif taxable_income in range(12571, 50270):
+            basic_rate = taxable_income * 0.20
+
+        elif taxable_income in range(50271, 150000):
+            high_rate = (taxable_income - basic_rate) * 0.40
 
         else:
-            higher_rate = (annual_salary - (basic_rate + high_rate)) * 0.45
+            higher_rate = (taxable_income - (basic_rate + high_rate)) * 0.45
 
-    tax_deducted = annual_salary - (basic_rate + high_rate + higher_rate)
+    tax_deducted = taxable_income - (basic_rate + high_rate + higher_rate)
 
+    print(f"Taxable income is: {round(taxable_income)}")
     print(f"Basic rate tax deducted is: {round(basic_rate)}")
     print(f"High rate tax deducted is: {round(high_rate)}")
     print(f"Higher rax tax deducted is: {round(higher_rate)}")
