@@ -66,29 +66,27 @@ def workout_tax_breakdown(tax_free_amount, annual_salary):
     Worksout tax breakdown using the tax code, the derived tax free amount and
     the annual salary entered.
     """
-    tax_deducted = None
-    # tax_deducted = annual_salary - (basic_tax_rate_amt + high_tax_rate + higher_tax_rate)
+    tax_deducted = int()
 
-    # tax_rate_amt = int(annual_salary) - int(tax_free_amount)
-    basic_tax_rate_amt = None
-    high_tax_rate = None
-    higher_tax_rate = None
+    basic_rate = int()
+    high_rate = int()
+    higher_rate = int()
 
     for annual_salary in range(0, 150000):
         if annual_salary in range(0, 12571):
-            no_tax_rate_amt = int(0)
+            zero_rate = int(0)
         elif annual_salary in range(12571, 50270):
-            basic_tax_rate_amt = annual_salary * 0.2
+            basic_rate = annual_salary * 0.20
 
         elif annual_salary in range(50271, 150000):
-            high_tax_rate = (annual_salary - basic_tax_rate_amt) * 0.4
+            high_rate = (annual_salary - basic_rate) * 0.40
 
         else:
-            higher_tax_rate = annual_salary - (int(basic_tax_rate_amt) + int(high_tax_rate)) * 0.45
+            higher_rate = (annual_salary - (basic_rate + high_rate)) * 0.45
 
-    tax_deducted = round(annual_salary - (basic_tax_rate_amt + high_tax_rate + higher_tax_rate))
+    tax_deducted = annual_salary - (basic_rate + high_rate + higher_rate)
 
-    print(f"Tax deducted is: {tax_deducted}")
+    print(f"Tax deducted is: {round(tax_deducted)}")
 
     return tax_deducted
 
@@ -102,14 +100,16 @@ def workout_national_insurance(tax_free_amount, annual_salary):
 
 def workout_take_home(annual_salary, tax, national_insurance):
     """
-    Returns take home amount using the annual salary figure, tax deducted and national insurance deducteds
+    Returns take home amount using the annual salary figure, tax deducted and 
+    national insurance deducteds
     """
     return
 
 
 def give_results(tax_code, annual_salary, tax, national_insurance, take_home):
     """
-    Presents the take home amount alongside annual salary, tax and nataional insurance
+    Presents the take home amount alongside annual salary, tax and 
+    nataional insurance
     """
     return
 
