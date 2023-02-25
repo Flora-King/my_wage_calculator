@@ -86,7 +86,10 @@ def workout_tax_breakdown(tax_free_amount, annual_salary):
 
     tax_deducted = annual_salary - (basic_rate + high_rate + higher_rate)
 
-    print(f"Tax deducted is: {round(tax_deducted)}")
+    print(f"Basic rate tax deducted is: {round(basic_rate)}")
+    print(f"High rate tax deducted is: {round(high_rate)}")
+    print(f"Higher rax tax deducted is: {round(higher_rate)}")
+    print(f"Total tax deducted is: {round(tax_deducted)}")
 
     return tax_deducted
 
