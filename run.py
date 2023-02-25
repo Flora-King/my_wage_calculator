@@ -1,4 +1,4 @@
-# this program enables you to work out your monthly take home pay
+# This program allows the user to work out their monthly take home pay using their gross income/salary
 
 import re
 
@@ -24,9 +24,8 @@ def show_menu():
 
 def get_tax_code():
     """
-    this function asks the user to input a tax code. it then uses a regular expression which validates
-    that four numbers and a letter has been inputted. Upon getting a valid response it returns the entered tax code
-    :return: entered tax code
+    Asks the user to input a tax code. Then uses a regular expression to validates 
+    that four numbers and a letter has been entered. Then returns the entered tax code if latter is valid
     """
     entered_tax_code = input('Please enter your UK tax code, your UK tax code is four digits followed by a '
                              'letter').strip().lower()
@@ -40,31 +39,60 @@ def get_tax_code():
 
 
 def extract_tax_free_from_tax_code(tax_code):
-    """ write doc string here """
+    """ 
+    Derives the tax free amount by multiplying by the tax code numbers by 10 
+    """
     cleaned_tax_code = tax_code[:4]
     tax_free_amount = int(cleaned_tax_code) * 10
     return tax_free_amount
 
 
 def get_annual_salary():
+    """ 
+    Gets user's annual salary before tax and national insurance are deducted
+    """
+    annual_salary = input("Enter your annual salary here: \n")
+    print(f"Your annual salary is: {annual_salary}")
+    return  annual_salary
+
+
+def workout_tax_breakdown(tax_free_amount, annual_salary):
+    """
+    Works out tax breakdown using the tax code, the derived tax free amount and the annual salary entered.
+    """
+    tax_free_amount = int(tax_code[:4]) * 10
+
+    tax_breakdown = []
+    amt_to_rate = annual_salary - tax_free_amount
+    if amt_to_rate in range(12,571, 50,270):
+        tax_rate = amt_to_rate * 0.2
+
+    elif amt_to_rate in range(50,271, 150,000):
+        tax_rate = amt_to_rate * 0.4
+    else:
+        tax_rate = amt_to_rate * 0.45
+    return tax_breakdown
+
+
+def workout_national_insurance(tax_free_amount, annual_salary):
+    """
+    Woks out the national insurance amount to be deducted/paid 
+    """
     return
 
 
-def workout_tax_breakdown(tax_free, salary):
+def workout_take_home(annual_salary, tax, national_insurance):
     return
 
 
-def workout_nation_insurance(tax_free, salary):
+def give_results(tax_code, annual_salary, tax, national_insurance, take_home):
     return
 
 
-def workout_take_home(annualSalary, tax, nationalInsurance):
-    return
-
-
-def give_results(taxcode, salary, tax, nationalInsurance, takehome):
-    return
-
-
-
-show_menu()
+def main():
+"""
+Runs all program functions
+"""
+    show_menu()
+    get_annual_salary()
+    workout_tax_breakdown(tax_free_amount, annual_salary)
