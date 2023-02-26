@@ -75,12 +75,13 @@ def workout_tax_breakdown(tax_free_amount, annual_salary):
 
     taxable_income = int(annual_salary) - int(tax_free_amount)
 
-    #for taxable_income in range(0, 150000):
+    # for taxable_income in range(0, 150000):
 
     if taxable_income in range(0, 12571):
         zero_rate = int(0)
 
-    elif taxable_income in range(12571, 50270):
+    elif (taxable_income >= 12571) and (taxable_income < 50270):
+    #   elif taxable_income in range(12571, 50270):
         """ 
         Basic rate will be the taxable income minus the max taxable income amount that falls in the basic tax rate range * 20%
         """
@@ -98,7 +99,7 @@ def workout_tax_breakdown(tax_free_amount, annual_salary):
         """
         higher_rate = (taxable_income - (basic_rate + high_rate)) * 0.45
 
-    tax_deducted = taxable_income - (basic_rate + high_rate + higher_rate)
+    tax_deducted = basic_rate + high_rate + higher_rate
 
     print(f"Taxable income is: {round(taxable_income)}")
     print(f"Basic rate tax deducted is: {round(basic_rate)}")
