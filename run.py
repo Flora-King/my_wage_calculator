@@ -81,12 +81,21 @@ def workout_tax_breakdown(tax_free_amount, annual_salary):
         zero_rate = int(0)
 
     elif taxable_income in range(12571, 50270):
+        """ 
+        Basic rate will be the taxable income minus the max taxable income amount that falls in the basic tax rate range * 20%
+        """
         basic_rate = taxable_income * 0.20
 
     elif taxable_income in range(50271, 150000):
+        """ 
+        High rate will be the remianing max taxable income amount after subtracting the max taxable income amount that falls in the basic tax rate range * 40%
+        """
         high_rate = (taxable_income - basic_rate) * 0.40
 
     else:
+        """ 
+        Higher rate will be the remianing max taxable income amount after subtracting the max taxable income amount that falls in the high tax rate range * 45%
+        """
         higher_rate = (taxable_income - (basic_rate + high_rate)) * 0.45
 
     tax_deducted = taxable_income - (basic_rate + high_rate + higher_rate)
