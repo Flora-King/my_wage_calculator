@@ -61,53 +61,62 @@ def get_annual_salary():
     return annual_salary
 
 
-def workout_tax_breakdown(tax_free_amount, annual_salary):
+def workout_income_tax_breakdown(tax_free_amount, annual_salary):
     """
     Works out taxable income by subtracting annual salary and tax free amount.
     Then works out the basic tax rate, high tax rate and Higher tax rate.
     Finally returns total tax deducted which is the sum of all the tax rates.
     """
-    tax_deducted = int()
-
+    income_tax_deducted = int()
+    zero_rate = int()
     basic_rate = int()
     high_rate = int()
     higher_rate = int()
-
+    remaining_taxable_income_h = int()
     taxable_income = int(annual_salary) - int(tax_free_amount)
 
-    # for taxable_income in range(0, 150000):
+    if taxable_income <= tax_free_amount:
+        # zero_rate = taxable_income * 0
+        zero_rate = 0
+        # print(zero_rate)
 
-    if taxable_income in range(0, 12571):
-        zero_rate = int(0)
+    elif taxable_income > tax_free_amount and taxable_income <= 50270:
+        basic_rate -= taxable_income * 0.2
+        return basic_rate
 
-    elif (taxable_income >= 12571) and (taxable_income < 50270):
-    #   elif taxable_income in range(12571, 50270):
-        """ 
-        Basic rate will be the taxable income minus the max taxable income amount that falls in the basic tax rate range * 20%
-        """
-        basic_rate = taxable_income * 0.20
-
-    elif taxable_income in range(50271, 150000):
-        """ 
-        High rate will be the remianing max taxable income amount after subtracting the max taxable income amount that falls in the basic tax rate range * 40%
-        """
-        high_rate = (taxable_income - basic_rate) * 0.40
+        remaining_taxable_income_h = taxable_income - basic_rate
+        print(remaining_taxable_income_h)
+            
+    elif remaining_taxable_income_h > 50270 and remaining_taxable_income_h < 150000:
+        high_rate -= remaining_taxable_income_h * 0.4
 
     else:
-        """ 
-        Higher rate will be the remianing max taxable income amount after subtracting the max taxable income amount that falls in the high tax rate range * 45%
-        """
-        higher_rate = (taxable_income - (basic_rate + high_rate)) * 0.45
+        higher_rate -= remaining_taxable_income_h - 150000 * 0.45
 
-    tax_deducted = basic_rate + high_rate + higher_rate
+    income_tax_deducted = basic_rate + high_rate + higher_rate
 
     print(f"Taxable income is: {round(taxable_income)}")
     print(f"Basic rate tax deducted is: {round(basic_rate)}")
     print(f"High rate tax deducted is: {round(high_rate)}")
     print(f"Higher rax tax deducted is: {round(higher_rate)}")
-    print(f"Total tax deducted is: {round(tax_deducted)}")
+    print(f"Total income tax deducted is: {round(income_tax_deducted)}")
 
-    return tax_deducted
+    return income_tax_deducted
+
+
+def workout_basic_tax_rate(tax_free_amount, annual_salary):
+
+    # zero_rate = int()
+    taxable_income_b = int()
+
+    # taxable_income_b = int(annual_salary) - int(tax_free_amount)
+
+    if taxable_income_b > tax_free_amount and int(taxable_income_b) <= 50270:
+        taxable_income_b -= tax_free_amount
+        return taxable_income_b * 0.2
+
+    # print(f"Taxable income is: {round(taxable_income)}")
+    print(f"Basic rate tax deducted is: {round(taxable_income_b)}")
 
 
 def workout_national_insurance(tax_free_amount, annual_salary):
@@ -144,7 +153,8 @@ def main():
     # get_annual_salary()
     tax_code = get_tax_code()
     tax_free_amount = extract_tax_free_from_tax_code(tax_code)
-    workout_tax_breakdown(tax_free_amount, annual_salary)
+    # workout_basic_tax_rate(tax_free_amount, annual_salary)
+    workout_income_tax_breakdown(tax_free_amount, annual_salary)
 
 
 main()
