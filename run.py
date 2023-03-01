@@ -75,23 +75,18 @@ def workout_income_tax_breakdown(tax_free_amount, annual_salary):
     remaining_taxable_income_h = int()
     taxable_income = int(annual_salary) - int(tax_free_amount)
 
-    if taxable_income <= tax_free_amount:
-        # zero_rate = taxable_income * 0
-        zero_rate = 0
-        # print(zero_rate)
+    if int(annual_salary) <= tax_free_amount:
+        zero_rate = int(tax_free_amount) * 0
 
-    elif taxable_income > tax_free_amount and taxable_income <= 50270:
-        basic_rate -= taxable_income * 0.2
-        return basic_rate
-
-        remaining_taxable_income_h = taxable_income - basic_rate
-        print(remaining_taxable_income_h)
+    elif int(annual_salary) <= 50270:
+        basic_rate = (int(annual_salary) - 12570) * 0.2
             
-    elif remaining_taxable_income_h > 50270 and remaining_taxable_income_h < 150000:
-        high_rate -= remaining_taxable_income_h * 0.4
+    elif int(annual_salary) <= 150000:
+        high_rate = basic_rate + (int(annual_salary) - 50270) * 0.4
 
     else:
-        higher_rate -= remaining_taxable_income_h - 150000 * 0.45
+        remaining_taxable_income_h = taxable_income - basic_rate
+        higher_rate = remaining_taxable_income_h - 150000 * 0.45
 
     income_tax_deducted = basic_rate + high_rate + higher_rate
 
