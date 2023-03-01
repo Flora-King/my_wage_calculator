@@ -1,6 +1,6 @@
 """
 This program allows the user to work out their monthly take home pay
-using their gross income/salary
+using their gross earnings
 """
 
 import re
@@ -51,20 +51,20 @@ def extract_tax_free_from_tax_code(tax_code):
     return tax_free_amount
 
 
-def get_annual_salary():
+def get_gross_earnings():
     """
-    Gets user's annual salary before tax and national insurance are deducted
+    Gets user's total earnings before tax and national insurance are deducted
     """
-    annual_salary = input("Enter your annual salary here: \n")
-    print(f"Your annual salary is: {annual_salary}")
+    gross_earnings = input("Enter your gross earnings here: \n")
+    print(f"Your gross earnings are: {gross_earnings}")
 
-    return annual_salary
+    return gross_earnings
 
 
-def workout_income_tax_breakdown(tax_free_amount, annual_salary):
+def workout_income_tax_breakdown(tax_free_amount, gross_earnings):
     """
     Works out taxable income by subtracting annual salary and tax free amount.
-    Then works out the basic tax rate, high tax rate and Higher tax rate.
+    Then works out the basic tax rate, high tax rate, and Higher tax rate.
     Finally returns total tax deducted which is the sum of all the tax rates.
     """
     income_tax_deducted = int()
@@ -72,17 +72,19 @@ def workout_income_tax_breakdown(tax_free_amount, annual_salary):
     basic_rate = int()
     high_rate = int()
     higher_rate = int()
+    # additional_tax = int()
     remaining_taxable_income_h = int()
-    taxable_income = int(annual_salary) - int(tax_free_amount)
+    taxable_income = int(gross_earnings) - int(tax_free_amount)
 
-    if int(annual_salary) <= tax_free_amount:
+    if int(gross_earnings) <= tax_free_amount:
         zero_rate = int(tax_free_amount) * 0
+        print(zero_rate)
 
-    elif int(annual_salary) <= 50270:
-        basic_rate = (int(annual_salary) - 12570) * 0.2
+    elif int(gross_earnings) <= 50270:
+        basic_rate = (int(gross_earnings) - 12570) * 0.2
             
-    elif int(annual_salary) <= 150000:
-        high_rate = basic_rate + (int(annual_salary) - 50270) * 0.4
+    elif int(gross_earnings) <= 150000:
+        high_rate = basic_rate + (int(gross_earnings) - 50270) * 0.4
 
     else:
         remaining_taxable_income_h = taxable_income - basic_rate
@@ -99,37 +101,53 @@ def workout_income_tax_breakdown(tax_free_amount, annual_salary):
     return income_tax_deducted
 
 
-def workout_basic_tax_rate(tax_free_amount, annual_salary):
-
-    # zero_rate = int()
-    taxable_income_b = int()
-
-    # taxable_income_b = int(annual_salary) - int(tax_free_amount)
-
-    if taxable_income_b > tax_free_amount and int(taxable_income_b) <= 50270:
-        taxable_income_b -= tax_free_amount
-        return taxable_income_b * 0.2
-
-    # print(f"Taxable income is: {round(taxable_income)}")
-    print(f"Basic rate tax deducted is: {round(taxable_income_b)}")
-
-
-def workout_national_insurance(tax_free_amount, annual_salary):
+def workout_national_tax_breakdown(gross_earnings):
     """
-    Works out the national insurance amount to be deducted/paid
+    Works out the class 1 national insurance amount deducted from all employees
     """
-    return
+    # lower_earnings_limit = 6396    # per year@ 0%
+    pri_thresh = 12570    # per year @ 0%
+    upper_limit = 50270   # per year @ 12%
+    above_upper_limit = 50271   # plus @2%
+    taxable_pt_ni = int()
+    taxable_uel_ni = int()
+    above_uel_ni = int()
 
 
-def workout_take_home(annual_salary, tax, national_insurance):
+    if int(gross_earnings) <= int(pri_thresh):
+        taxable_pt_ni = int(pri_thresh) * 0
+
+    elif int(gross_earnings) <= int(upper_limit):
+        taxable_uel_ni = float(int(upper_limit) - int(pri_thresh)) * 0.12
+
+    elif int(gross_earnings) > int(above_upper_limit):
+        above_uel_ni = (int(gross_earnings) - int(upper_limit)) * 0.2
+
+    national_insurance = taxable_pt_ni + taxable_uel_ni + above_uel_ni
+
+    print("NI breakdown is as follows: ")
+    print(f"Primary threshold NI deducted is: {float(taxable_pt_ni)}")
+    print(f"Upper limit NI deducted is: {float(taxable_uel_ni)}")
+    print(f"Above upper limit NI deducted is: {float(above_uel_ni)}")
+    print(f"Total National Insurance deducted is: {float(national_insurance)}")
+
+    return national_insurance
+
+
+def workout_take_home(gross_earnings, income_tax_deducted, national_insurance):
     """
     Returns take home amount using the annual salary figure, tax deducted and 
     national insurance deducteds
     """
-    return
+
+    take_home = int(gross_earnings) - int((national_insurance) + int(income_tax_deducted))
+
+    print(f"monthly take home is: {float(take_home)}")
+
+    return take_home / 12
 
 
-def give_results(tax_code, annual_salary, tax, national_insurance, take_home):
+def give_results(tax_code, gross_earnings, tax, national_insurance, take_home):
     """
     Presents the take home amount alongside annual salary, tax and 
     nataional insurance
@@ -144,12 +162,15 @@ def main():
 
     show_menu()
     # get_tax_code()
-    annual_salary = get_annual_salary()
-    # get_annual_salary()
+    gross_earnings = get_gross_earnings()
     tax_code = get_tax_code()
+    extract_tax_free_from_tax_code(tax_code)
     tax_free_amount = extract_tax_free_from_tax_code(tax_code)
-    # workout_basic_tax_rate(tax_free_amount, annual_salary)
-    workout_income_tax_breakdown(tax_free_amount, annual_salary)
+    workout_income_tax_breakdown(tax_free_amount, gross_earnings)
+    workout_national_tax_breakdown(gross_earnings)
+    income_tax_deducted = workout_income_tax_breakdown(tax_free_amount, gross_earnings)
+    national_insurance = workout_income_tax_breakdown(tax_free_amount, gross_earnings)
+    workout_take_home(gross_earnings, income_tax_deducted, national_insurance)
 
 
 main()
