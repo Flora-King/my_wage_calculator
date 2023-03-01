@@ -7,6 +7,10 @@ import re
 
 
 def show_menu():
+    """
+    Asks user to choose whether to continue using the calculator or quit
+    """
+
     print('''Hi there, thanks for using our simple UK wage calculator, press:
     1. Workout Monthly Wage
     2. Quit
@@ -56,12 +60,12 @@ def get_gross_earnings():
     Gets user's total earnings before tax and national insurance are deducted
     """
     gross_earnings = input("Enter your gross earnings here: \n")
-    print(f"Your gross earnings are: {gross_earnings:.2f}")
+    print(f"Your gross earnings are: {gross_earnings}")
 
     return gross_earnings
 
 
-def workout_income_tax_breakdown(tax_free_amt, gross_earnings):
+def income_tax_breakdown(tax_free_amt, gross_earnings):
     """
     Works out taxable income by subtracting annual salary and tax free amount.
     Then works out the basic tax rate, high tax rate, and Higher tax rate.
@@ -103,7 +107,7 @@ def workout_income_tax_breakdown(tax_free_amt, gross_earnings):
     return income_tax
 
 
-def workout_national_tax_breakdown(gross_earnings):
+def national_insurance_breakdown(gross_earnings):
     """
     Works out the class 1 national insurance amount deducted from all employees
     """
@@ -135,7 +139,7 @@ def workout_national_tax_breakdown(gross_earnings):
     return national_insurance
 
 
-def workout_take_home(gross_earnings, income_tax_deducted, national_insurance):
+def workout_take_home(gross_earnings, income_tax, national_insurance):
     """
     Returns take home amount using the annual salary figure, tax deducted and
     national insurance deducteds
@@ -148,10 +152,10 @@ def workout_take_home(gross_earnings, income_tax_deducted, national_insurance):
     return take_home / 12
 
 
-def give_results(tax_code, gross_earnings, tax, national_insurance, take_home):
+def give_results(gross_earnings, income_tax, national_insurance, take_home):
     """
-    Presents the take home amount alongside annual salary, tax and
-    nataional insurance
+    Presents the take home amount alongside gross earnings, income tax and
+    nataional insurance deductions in a table
     """
     return
 
@@ -167,10 +171,10 @@ def main():
     tax_code = get_tax_code()
     # extract_tax_free_from_tax_code(tax_code)
     tax_free_amt = extract_tax_free_from_tax_code(tax_code)
-    workout_income_tax_breakdown(tax_free_amt, gross_earnings)
-    workout_national_tax_breakdown(gross_earnings)
-    income_tax = workout_income_tax_breakdown(tax_free_amt, gross_earnings)
-    national_insurance = workout_income_tax_breakdown(tax_free_amt, gross_earnings)
+    # income_tax_breakdown(tax_free_amt, gross_earnings)
+    income_tax = income_tax_breakdown(tax_free_amt, gross_earnings)
+    national_insurance = national_insurance_breakdown(gross_earnings)
+    # national_insurance = workout_income_tax_breakdown(tax_free_amt, gross_earnings)
     workout_take_home(gross_earnings, income_tax, national_insurance)
 
 
