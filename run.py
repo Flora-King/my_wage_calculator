@@ -56,7 +56,7 @@ def get_gross_earnings():
     Gets user's total earnings before tax and national insurance are deducted
     """
     gross_earnings = input("Enter your gross earnings here: \n")
-    print(f"Your gross earnings are: {gross_earnings}")
+    print(f"Your gross earnings are: {gross_earnings:.2f}")
 
     return gross_earnings
 
@@ -94,11 +94,11 @@ def workout_income_tax_breakdown(tax_free_amt, gross_earnings):
 
     income_tax = basic_rate + high_rate + higher_rate
 
-    print(f"Taxable income is: {round(taxable_income)}")
-    print(f"Basic rate tax deducted is: {round(basic_rate)}")
-    print(f"High rate tax deducted is: {round(high_rate)}")
-    print(f"Higher rax tax deducted is: {round(higher_rate)}")
-    print(f"Total income tax deducted is: {round(income_tax)}")
+    print(f"Taxable income is: {taxable_income:.2f}")
+    print(f"Basic rate tax deducted is: {basic_rate:.2f}")
+    print(f"High rate tax deducted is: {high_rate:.2f}")
+    print(f"Higher rate tax deducted is: {higher_rate:.2f}")
+    print(f"Total income tax deducted is: {income_tax:.2f}")
 
     return income_tax
 
@@ -127,10 +127,10 @@ def workout_national_tax_breakdown(gross_earnings):
     national_insurance = taxable_pt_ni + taxable_uel_ni + above_uel_ni
 
     print("NI breakdown is as follows: ")
-    print(f"Primary threshold NI deducted is: {float(taxable_pt_ni)}")
-    print(f"Upper limit NI deducted is: {float(taxable_uel_ni)}")
-    print(f"Above upper limit NI deducted is: {float(above_uel_ni)}")
-    print(f"Total National Insurance deducted is: {float(national_insurance)}")
+    print(f"Primary threshold NI deducted is: {taxable_pt_ni:.2f}")
+    print(f"Upper limit NI deducted is: {taxable_uel_ni:.2f}")
+    print(f"Above upper limit NI deducted is: {above_uel_ni:.2f}")
+    print(f"Total National Insurance deducted is: {national_insurance:.2f}")
 
     return national_insurance
 
