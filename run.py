@@ -160,6 +160,33 @@ def give_results(gross_earnings, income_tax, national_insurance, take_home):
     return
 
 
+def basic_rate_tax(gross_earnings):
+    """
+    work out basic rate income tax amount
+    """
+    rate = 0
+    basic_rate_taxes = 0
+    higher_rate_taxes = int()
+    gross_earnings = get_gross_earnings()
+    # while (int(gross_earnings) > 12570):
+
+    if int(gross_earnings) in range(12570, 50270):
+        basic_rate_taxes = (50270 - 12570) * rate
+        rate = 0.2
+        
+    elif int(gross_earnings) in range(50270, 150000):
+        high_rate_taxes = (150000 - 50270 - 12570) * rate
+        rate = 0.40
+
+    elif gross_earnings > 150000:
+        higher_rate_taxes = (int(gross_earnings) - 150000) * rate
+        rate = 0.45
+
+    print(f"Basic rate tax deducted is: {basic_rate_taxes:.2f}")
+    print(f"High rate tax deducted is: {high_rate_taxes:.2f}")
+    print(f"Higher rate tax deducted is: {higher_rate_taxes:.2f}")
+
+
 def main():
     """
     Runs all program functions
@@ -177,5 +204,16 @@ def main():
     # national_insurance = workout_income_tax_breakdown(tax_free_amt, gross_earnings)
     workout_take_home(gross_earnings, income_tax, national_insurance)
 
+
+def main_2():
+    """ 
+    Runs functions
+    """
+    # show_menu()
+    gross_earnings = get_gross_earnings()
+    basic_rate_tax(gross_earnings)
+
+
+# main_2()
 
 main()
