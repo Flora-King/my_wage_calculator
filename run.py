@@ -76,14 +76,14 @@ def income_tax_breakdown(tax_free_amt, gross_earnings):
     higher_rate_amount = 0
     income_tax = 0
 
-    if gross_earnings <= 50000:
+    if gross_earnings <= basic_rate:
         basic_rate_amount = (gross_earnings - tax_free_amt) * 0.2
     else:
-        basic_rate_amount = (50270 - tax_free_amt) * 0.2
-    if gross_earnings > 50000:
-        high_rate_amount = (gross_earnings - 50270) * 0.4
-        # elif gross_earnings > 150000:
-    else:
+        basic_rate_amount = (basic_rate - tax_free_amt) * 0.2
+
+    if gross_earnings <= 150000:
+        high_rate_amount = (gross_earnings - basic_rate) * 0.4
+    elif gross_earnings > 150000:
         higher_rate_amount = (gross_earnings - 150000) * 0.45
 
     print(f"Taxable income is: {taxable_income:.2f}")
