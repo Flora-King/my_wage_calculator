@@ -74,9 +74,9 @@ def get_taxable_income(gross_earnings, tax_free_amt):
         taxable_income = gross_earnings - tax_free_amt
     else:
         taxable_income = gross_earnings
-    if gross_earnings > 100000:
+    if gross_earnings > tax_free_limit:
         if gross_earnings < 125140:
-            taxable_income = gross_earnings - (12570 - ((gross_earnings - 100000) / 2))
+            taxable_income = gross_earnings - (12570 - ((gross_earnings - tax_free_limit) / 2))
     else:
         taxable_income = gross_earnings
 
@@ -100,16 +100,16 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     if gross_earnings <= 50270:
         basic_rate_amount = taxable_income * 0.2
     else:
-        basic_rate_amount = (50270 - 12570) * 0.2
-    if gross_earnings > 50270:
-        if gross_earnings <= 150000:
-            higher_rate_amt = (taxable_income - 37700) * 0.4
+        basic_rate_amount = (basic_rate - 12570) * 0.2
+    if gross_earnings > basic_rate:
+        if gross_earnings <= higher_rate:
+            higher_rate_amt = (higher_rate - 37700) * 0.4
         else:
-            higher_rate_amt = (taxable_income - 37700) * 0.4
-            additional_rate_amt = (taxable_income - 150000) * 0.45
+            higher_rate_amt = (higher_rate - 37700) * 0.4
+            additional_rate_amt = (taxable_income - higher_rate) * 0.45
 
-        if gross_earnings > 150000:
-            additional_rate_amt = (taxable_income - 150000) * 0.45
+        if gross_earnings > higher_rate:
+            additional_rate_amt = (taxable_income - higher_rate) * 0.45
         else:
             print("no higher rate tax deducted")
 
