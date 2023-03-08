@@ -23,10 +23,11 @@ def show_menu():
     if instruct == '1':
         tax_code = get_tax_code()
         gross_earnings = get_gross_earnings()
-        tax_free_amt = extract_tax_free_from_tax_code(tax_code)
+        tax_free_amt = extract_tax_free_from_tax_code(tax_code, gross_earnings)
         taxable_income = get_taxable_income(gross_earnings, tax_free_amt)
-        income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income)
-        national_insurance_breakdown(gross_earnings)
+        income_tax = income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income)
+        national_insurance = national_insurance_breakdown(gross_earnings)
+        workout_take_home(gross_earnings, income_tax, national_insurance)
     if instruct == '2':
         exit()
 
@@ -48,12 +49,22 @@ def get_tax_code():
     return entered_tax_code
 
 
-def extract_tax_free_from_tax_code(tax_code):
+def extract_tax_free_from_tax_code(tax_code, gross_earnings):
     """
     Returns the tax free amount by multiplying by the numbers in tax code by 10
     """
     cleaned_tax_code = tax_code[:4]
     tax_free_amt = int(cleaned_tax_code) * 10
+    # return tax_free_amt
+
+    if gross_earnings <= 100000:
+        tax_free_amt = int(cleaned_tax_code) * 10
+    elif gross_earnings > 100000:
+        if gross_earnings < 125140:
+            tax_free_amt = 12570 - ((gross_earnings - 100000) / 2)
+    else:
+        tax_free_amt = 0
+
     return tax_free_amt
 
 
@@ -74,7 +85,6 @@ def get_taxable_income(gross_earnings, tax_free_amt):
     if gross_earnings <= 100000:
         taxable_income = gross_earnings - tax_free_amt
     else:
-        taxable_income = gross_earnings
         taxable_income = gross_earnings - (12570 - ((gross_earnings - tax_free_limit) / 2))
     if gross_earnings > tax_free_limit:
         if gross_earnings < 125140:
@@ -102,26 +112,28 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     if gross_earnings <= 50270:
         basic_rate_amount = taxable_income * 0.2
     else:
-        basic_rate_amount = (basic_rate - tax_free_amt) * 0.2
+        basic_rate_amount = (basic_rate - 12570) * 0.2
     if gross_earnings > basic_rate:
         if gross_earnings <= higher_rate:
-            higher_rate_amt = (gross_earnings - 50270) * 0.4
+            # higher_rate_amt = (gross_earnings - 50270) * 0.4
+            higher_rate_amt = (gross_earnings - (37700 + tax_free_amt)) * 0.4
         else:
-            higher_rate_amt = (gross_earnings - 50270) * 0.4
+            higher_rate_amt = (150000 - 112300) * 0.4
             additional_rate_amt = (taxable_income - higher_rate) * 0.45
 
         if gross_earnings > higher_rate:
             additional_rate_amt = (taxable_income - higher_rate) * 0.45
-        else:
-            print("no higher rate tax deducted")
+        # else:
+            # print("no higher rate tax deducted")
 
-    print(f"Taxable income is: {taxable_income:.2f}")
-    print(f"Basic rate tax deducted is: {basic_rate_amount:.2f}")
-    print(f"Higher rate tax deducted is: {higher_rate_amt:.2f}")
-    print(f"Additional rate tax deducted is: {additional_rate_amt:.2f}")
-    print(f"Total income tax deducted is: {income_tax:.2f}")
+    print("Your Income Tax breakdown is as follows:")
+    print(f"Taxable income is: £{taxable_income:.2f}")
+    print(f"Basic rate tax deducted is: £{basic_rate_amount:.2f}")
+    print(f"Higher rate tax deducted is: £{higher_rate_amt:.2f}")
+    print(f"Additional rate tax deducted is: £{additional_rate_amt:.2f}")
+    # print(f"Total income tax deducted is: {income_tax:.2f}")
 
-    income_tax = int(basic_rate_amount) + int(higher_rate_amt) + int(additional_rate_amt)
+    # income_tax = int(basic_rate_amount) + int(higher_rate_amt) + int(additional_rate_amt)
 
     return income_tax
 
@@ -133,15 +145,13 @@ def national_insurance_breakdown(gross_earnings):
     - 12.73% NI. tax over 12570 to 50270 per year  
     - 2.73% NI tax over 50270 gross earnings per year
     """
-    # lower_ni_limit = 12570
-    lower_ni_limit = 11908
+    lower_ni_limit = 12570
+    # lower_ni_limit = 11908
     basic_ni_limit = 50270
-    higher_ni_limit = 0
-
     basic_ni_amount = 0
     higher_ni_amount = 0
 
-    if gross_earnings > 12570:
+    if gross_earnings > lower_ni_limit:
         if gross_earnings <= basic_ni_limit:
             basic_ni_amount = (basic_ni_limit - lower_ni_limit) * 0.1273
         else:
@@ -150,23 +160,24 @@ def national_insurance_breakdown(gross_earnings):
 
     national_insurance = basic_ni_amount + higher_ni_amount
 
-    print("NI breakdown is as follows: ")
-    print(f"Primary threshold NI deducted is: {basic_ni_amount:.2f}")
-    print(f"Upper limit NI deducted is: {higher_ni_amount:.2f}")
-    print(f"Total National Insurance deducted is: {national_insurance:.2f}")
+    print("Your National Insurance Breakdown is as follows: ")
+    print(f"Primary threshold NI deducted is: £{basic_ni_amount:.2f}")
+    print(f"Upper limit NI deducted is: £{higher_ni_amount:.2f}")
+    print(f"Total National Insurance deducted is: £{national_insurance:.2f}")
 
     return national_insurance
 
 
 def workout_take_home(gross_earnings, income_tax, national_insurance):
     """
-    Returns take home amount using the annual salary figure, tax deducted and
-    national insurance deducteds
+    Returns take home amount by subtracting the income tax and
+    national insurance deducted from gross earnings 
     """
-    income_tax = int()
-    take_home = int(gross_earnings) - (int((national_insurance) + int(income_tax)))
-    print(f"monthly take home is: {float(take_home)}")
-    return take_home / 12
+
+    take_home = gross_earnings - national_insurance - income_tax
+    print(f"Annual take home amount is: £{take_home:.2f}")
+
+    return take_home
 
 
 def give_results(gross_earnings, income_tax, national_insurance, take_home):
