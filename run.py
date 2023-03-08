@@ -89,7 +89,7 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     Then works out the basic tax rate, high tax rate, and Higher tax rate.
     Finally returns total tax deducted which is the sum of all the tax rates.
     """
-    # taxable_income = gross_earnings - tax_free_amt
+
     basic_rate = 50270
     higher_rate = 150000
     basic_rate_amount = 0
@@ -100,12 +100,12 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     if gross_earnings <= 50270:
         basic_rate_amount = taxable_income * 0.2
     else:
-        basic_rate_amount = (basic_rate - 12570) * 0.2
+        basic_rate_amount = (basic_rate - tax_free_amt) * 0.2
     if gross_earnings > basic_rate:
         if gross_earnings <= higher_rate:
-            higher_rate_amt = (higher_rate - 37700) * 0.4
+            higher_rate_amt = (higher_rate - (basic_rate - tax_free_amt)) * 0.4
         else:
-            higher_rate_amt = (higher_rate - 37700) * 0.4
+            higher_rate_amt = (higher_rate - (basic_rate - tax_free_amt)) * 0.4
             additional_rate_amt = (taxable_income - higher_rate) * 0.45
 
         if gross_earnings > higher_rate:
