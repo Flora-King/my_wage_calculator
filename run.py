@@ -1,6 +1,7 @@
 """
 This program allows the user to work out their monthly take home pay
 using their gross earnings
+Income tax and National Insurance rates are relevant to 2022/23 UK tax year
 """
 import re
 
@@ -22,10 +23,10 @@ def show_menu():
     if instruct == '1':
         tax_code = get_tax_code()
         gross_earnings = get_gross_earnings()
-        tax_free_amt = extract_tax_free_from_tax_code(tax_code, gross_earnings)
+        tax_free_amt = extract_tax_free_from_tax_code(tax_code)
         taxable_income = get_taxable_income(gross_earnings, tax_free_amt)
         income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income)
-        # national_insurance_breakdown(gross_earnings)
+        national_insurance_breakdown(gross_earnings)
     if instruct == '2':
         exit()
 
@@ -47,7 +48,7 @@ def get_tax_code():
     return entered_tax_code
 
 
-def extract_tax_free_from_tax_code(tax_code, gross_earnings):
+def extract_tax_free_from_tax_code(tax_code):
     """
     Returns the tax free amount by multiplying by the numbers in tax code by 10
     """
@@ -66,7 +67,7 @@ def get_gross_earnings():
 
 def get_taxable_income(gross_earnings, tax_free_amt):
     """
-    Derives taxable income
+    Returns taxable income dependant on gross earnings
     """
     taxable_income = 0
     tax_free_limit = 100000
@@ -74,11 +75,12 @@ def get_taxable_income(gross_earnings, tax_free_amt):
         taxable_income = gross_earnings - tax_free_amt
     else:
         taxable_income = gross_earnings
+        taxable_income = gross_earnings - (12570 - ((gross_earnings - tax_free_limit) / 2))
     if gross_earnings > tax_free_limit:
         if gross_earnings < 125140:
             taxable_income = gross_earnings - (12570 - ((gross_earnings - tax_free_limit) / 2))
-    else:
-        taxable_income = gross_earnings
+        else:
+            taxable_income = gross_earnings
 
     return taxable_income
 
@@ -89,7 +91,7 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     Then works out the basic tax rate, high tax rate, and Higher tax rate.
     Finally returns total tax deducted which is the sum of all the tax rates.
     """
-
+    taxable_income = gross_earnings - tax_free_amt
     basic_rate = 50270
     higher_rate = 150000
     basic_rate_amount = 0
@@ -103,9 +105,9 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
         basic_rate_amount = (basic_rate - tax_free_amt) * 0.2
     if gross_earnings > basic_rate:
         if gross_earnings <= higher_rate:
-            higher_rate_amt = (higher_rate - (basic_rate - tax_free_amt)) * 0.4
+            higher_rate_amt = (gross_earnings - 50270) * 0.4
         else:
-            higher_rate_amt = (higher_rate - (basic_rate - tax_free_amt)) * 0.4
+            higher_rate_amt = (gross_earnings - 50270) * 0.4
             additional_rate_amt = (taxable_income - higher_rate) * 0.45
 
         if gross_earnings > higher_rate:
@@ -117,30 +119,34 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     print(f"Basic rate tax deducted is: {basic_rate_amount:.2f}")
     print(f"Higher rate tax deducted is: {higher_rate_amt:.2f}")
     print(f"Additional rate tax deducted is: {additional_rate_amt:.2f}")
-    # print(f"Total income tax deducted is: {income_tax:.2f}")
+    print(f"Total income tax deducted is: {income_tax:.2f}")
 
-   # income_tax = int(basic_rate_amount) + int(higher_rate_amt) + int(additional_rate_amt)
+    income_tax = int(basic_rate_amount) + int(higher_rate_amt) + int(additional_rate_amt)
 
     return income_tax
 
 
 def national_insurance_breakdown(gross_earnings):
     """
-    Works out the class 1 national insurance amount deducted from all employees
+    Works out the class 1 national insurance amount deducted per below:
+    - 0% NI tax on gross earnings below 12570
+    - 12.73% NI. tax over 12570 to 50270 per year  
+    - 2.73% NI tax over 50270 gross earnings per year
     """
+    # lower_ni_limit = 12570
     lower_ni_limit = 11908
-    basic_ni_limit = 50270        #  over 11908 to 50270 per year # 12.73% rate   
-   #  higher_ni_limit = over 50270   # 2.73% rate
+    basic_ni_limit = 50270
+    higher_ni_limit = 0
 
     basic_ni_amount = 0
     higher_ni_amount = 0
 
-    if gross_earnings > 11908:
-        if gross_earnings <= 50270:
-            basic_ni_amount = (50270 - 11908) * 0.1273
+    if gross_earnings > 12570:
+        if gross_earnings <= basic_ni_limit:
+            basic_ni_amount = (basic_ni_limit - lower_ni_limit) * 0.1273
         else:
-            basic_ni_amount = (50270 - 11908) * 0.1273
-            higher_ni_amount = (gross_earnings - 50270) * 0.0273
+            basic_ni_amount = (basic_ni_limit - lower_ni_limit) * 0.1273
+            higher_ni_amount = (gross_earnings - basic_ni_limit) * 0.0273
 
     national_insurance = basic_ni_amount + higher_ni_amount
 
