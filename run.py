@@ -4,6 +4,7 @@ using their gross earnings
 Income tax and National Insurance rates are relevant to 2022/23 UK tax year
 """
 import re
+from tabulate import tabulate
 
 
 def show_menu():
@@ -28,6 +29,8 @@ def show_menu():
         income_tax = income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income)
         national_insurance = national_insurance_breakdown(gross_earnings)
         workout_take_home(gross_earnings, income_tax, national_insurance)
+        take_home = workout_take_home(gross_earnings, income_tax, national_insurance)
+        give_results(gross_earnings, income_tax, national_insurance, taxable_income, take_home)
     if instruct == '2':
         exit()
 
@@ -180,12 +183,30 @@ def workout_take_home(gross_earnings, income_tax, national_insurance):
     return take_home
 
 
-def give_results(gross_earnings, income_tax, national_insurance, take_home):
+def give_results(gross_earnings, income_tax, national_insurance, taxable_income, take_home):
     """
     Presents the take home amount alongside gross earnings, income tax and
     nataional insurance deductions in a table
     """
-    return
+    annual_gross_earnings = gross_earnings
+    monthly_gross_earnings = gross_earnings / 12
+    annual_taxable_income = taxable_income
+    monthly_taxable_income = taxable_income / 12
+    annual_income_tax = income_tax
+    monthly_income_tax = income_tax / 12
+    annual_ni = national_insurance
+    monthly_ni = national_insurance / 12
+    annual_take_home = take_home
+    monthly_take_home = take_home / 12
+
+    tax_data = [
+        ['Gross Earnings', {annual_gross_earnings}, {monthly_gross_earnings}],
+        ["Taxable Income", {annual_taxable_income}, {monthly_taxable_income}],
+        ['Income Tax', {annual_income_tax}, {monthly_income_tax}],
+        ['National Insurance', {annual_ni}, {monthly_ni}],
+        ['Take Home', {annual_take_home}, {monthly_take_home}]
+    ]
+    print(tabulate(tax_data, headers=["Type", "Yearly", "Monthly"]))
 
 
 def main():
