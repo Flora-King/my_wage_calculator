@@ -4,7 +4,7 @@ using their gross earnings
 Income tax and National Insurance rates are relevant to 2022/23 UK tax year
 """
 import re
-from tabulate import tabulate
+import texttable as tt
 
 
 def show_menu():
@@ -30,7 +30,7 @@ def show_menu():
         national_insurance = national_insurance_breakdown(gross_earnings)
         workout_take_home(gross_earnings, income_tax, national_insurance)
         take_home = workout_take_home(gross_earnings, income_tax, national_insurance)
-        give_results(gross_earnings, income_tax, national_insurance, taxable_income, take_home)
+        tax_table_display(gross_earnings, taxable_income, income_tax, national_insurance, take_home)
     if instruct == '2':
         exit()
 
@@ -183,10 +183,9 @@ def workout_take_home(gross_earnings, income_tax, national_insurance):
     return take_home
 
 
-def give_results(gross_earnings, income_tax, national_insurance, taxable_income, take_home):
+def tax_table_display(gross_earnings, taxable_income, income_tax, national_insurance, take_home):
     """
-    Presents the take home amount alongside gross earnings, income tax and
-    nataional insurance deductions in a table
+    trying to create table
     """
     annual_gross_earnings = gross_earnings
     monthly_gross_earnings = gross_earnings / 12
@@ -198,15 +197,16 @@ def give_results(gross_earnings, income_tax, national_insurance, taxable_income,
     monthly_ni = national_insurance / 12
     annual_take_home = take_home
     monthly_take_home = take_home / 12
+    
 
-    tax_data = [
-        ['Gross Earnings', {annual_gross_earnings}, {monthly_gross_earnings}],
-        ["Taxable Income", {annual_taxable_income}, {monthly_taxable_income}],
-        ['Income Tax', {annual_income_tax}, {monthly_income_tax}],
-        ['National Insurance', {annual_ni}, {monthly_ni}],
-        ['Take Home', {annual_take_home}, {monthly_take_home}]
-    ]
-    print(tabulate(tax_data, headers=["Type", "Yearly", "Monthly"]))
+    tb = tt.Texttable()
+    tb.header(["Item", "Yearly £ ", "Monthly £ "])
+    tb.add_row(['Gross Earnings', annual_gross_earnings, monthly_gross_earnings])
+    tb.add_row(["Taxable Income", annual_taxable_income, monthly_taxable_income])
+    tb.add_row(['Income Tax', annual_income_tax, monthly_income_tax])
+    tb.add_row(['National Insurance', annual_ni, monthly_ni])
+    tb.add_row(['Take Home', annual_take_home, monthly_take_home])
+    print(tb.draw())
 
 
 def main():
