@@ -185,7 +185,7 @@ def workout_take_home(gross_earnings, income_tax, national_insurance):
 
 def tax_table_display(gross_earnings, taxable_income, income_tax, national_insurance, take_home):
     """
-    trying to create table
+    Returns all values assembled in a table
     """
     annual_gross_earnings = gross_earnings
     monthly_gross_earnings = gross_earnings / 12
