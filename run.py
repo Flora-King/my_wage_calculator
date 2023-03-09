@@ -145,7 +145,7 @@ def national_insurance_breakdown(gross_earnings):
     """
     Works out the class 1 national insurance amount deducted per below:
     - 0% NI tax on gross earnings below 12570
-    - 12.73% NI. tax over 12570 to 50270 per year  
+    - 12.73% NI. tax over 12570 to 50270 per year
     - 2.73% NI tax over 50270 gross earnings per year
     """
     lower_ni_limit = 12570
@@ -174,7 +174,7 @@ def national_insurance_breakdown(gross_earnings):
 def workout_take_home(gross_earnings, income_tax, national_insurance):
     """
     Returns take home amount by subtracting the income tax and
-    national insurance deducted from gross earnings 
+    national insurance deducted from gross earnings
     """
 
     take_home = gross_earnings - national_insurance - income_tax
@@ -197,7 +197,6 @@ def tax_table_display(gross_earnings, taxable_income, income_tax, national_insur
     monthly_ni = national_insurance / 12
     annual_take_home = take_home
     monthly_take_home = take_home / 12
-    
 
     tb = tt.Texttable()
     tb.header(["Item", "Yearly £ ", "Monthly £ "])
