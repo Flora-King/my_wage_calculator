@@ -134,9 +134,9 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     print(f"Basic rate tax deducted is: £{basic_rate_amount:.2f}")
     print(f"Higher rate tax deducted is: £{higher_rate_amt:.2f}")
     print(f"Additional rate tax deducted is: £{additional_rate_amt:.2f}")
-    # print(f"Total income tax deducted is: {income_tax:.2f}")
+    print(f"Total income tax deducted is: {income_tax:.2f}")
 
-    # income_tax = int(basic_rate_amount) + int(higher_rate_amt) + int(additional_rate_amt)
+    income_tax = basic_rate_amount + higher_rate_amt + additional_rate_amt
 
     return income_tax
 
@@ -149,7 +149,6 @@ def national_insurance_breakdown(gross_earnings):
     - 2.73% NI tax over 50270 gross earnings per year
     """
     lower_ni_limit = 12570
-    # lower_ni_limit = 11908
     basic_ni_limit = 50270
     basic_ni_amount = 0
     higher_ni_amount = 0
