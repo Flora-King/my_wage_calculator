@@ -42,7 +42,7 @@ def get_tax_code():
     """
     entered_tax_code = input('Please enter your UK tax code, it must be four digits followed by a '
                              'letter').strip().lower()
-    patten = re.compile('\d{4}[a-z]{1}')
+    patten = re.compile(r'\d{4}[a-z]{1}')
     is_tax_code = patten.match(entered_tax_code)
     while is_tax_code is None:
         print('No, that is not a correctly formatted UK tax code!')
@@ -101,9 +101,9 @@ def get_taxable_income(annual_gross_earnings, tax_free_amt):
 
 def income_tax_breakdown(tax_free_amt, annual_gross_earnings, annual_taxable_income):
     """
-    Returns annual taxable income using annual gross earnings and tax free amount.
-    Then works out the basic tax rate, high tax rate, and Higher tax rate.
-    Finally returns total tax deducted.
+    Returns annual taxable income using annual gross earnings and tax free
+    amount. Then works out the basic tax rate, high tax rate, and Higher
+    tax rate. And finally returns total tax deducted.
     """
     basic_rate = 50270
     high_rate = 150000
@@ -112,15 +112,15 @@ def income_tax_breakdown(tax_free_amt, annual_gross_earnings, annual_taxable_inc
     additional_rate_amt = 0
     annual_income_tax = 0
 
-    if annual_gross_earnings <= 50270:
+    if annual_gross_earnings <= basic_rate:
         basic_rate_amt = annual_taxable_income * 0.2
     else:
-        basic_rate_amt = (basic_rate - 12570) * 0.2
+        basic_rate_amt = (basic_rate - tax_free_amt) * 0.2
     if annual_gross_earnings > basic_rate:
         if annual_gross_earnings <= high_rate:
             high_rate_amt = (annual_gross_earnings - 37700) * 0.4
         else:
-            high_rate_amt = (150000 - 112300) * 0.4
+            high_rate_amt = (high_rate - 112300) * 0.4
             additional_rate_amt = (annual_taxable_income - high_rate) * 0.45
 
         if annual_gross_earnings > high_rate:
