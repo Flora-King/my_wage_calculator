@@ -79,19 +79,22 @@ def get_gross_earnings():
 
 def get_taxable_income(annual_gross_earnings, tax_free_amt):
     """
-    Returns taxable income dependant on gross earnings input
+    Returns taxable income dependant using input annual gross earningss
     """
     annual_taxable_income = 0
     tax_free_limit = 100000
+
     if annual_gross_earnings <= 100000:
         annual_taxable_income = annual_gross_earnings - tax_free_amt
     else:
         annual_taxable_income = annual_gross_earnings - (12570 - ((annual_gross_earnings - tax_free_limit) / 2))
-    if annual_gross_earnings > tax_free_limit:
+    if annual_gross_earnings > 100000:
         if annual_gross_earnings < 125140:
             annual_taxable_income = annual_gross_earnings - (12570 - ((annual_gross_earnings - tax_free_limit) / 2))
         else:
             annual_taxable_income = annual_gross_earnings
+    if annual_gross_earnings <= tax_free_amt:
+        annual_taxable_income = 0
 
     return annual_taxable_income
 
@@ -102,36 +105,35 @@ def income_tax_breakdown(tax_free_amt, annual_gross_earnings, annual_taxable_inc
     Then works out the basic tax rate, high tax rate, and Higher tax rate.
     Finally returns total tax deducted.
     """
-    annual_taxable_income = annual_gross_earnings - tax_free_amt
     basic_rate = 50270
-    higher_rate = 150000
-    basic_rate_amount = 0
-    higher_rate_amt = 0
+    high_rate = 150000
+    basic_rate_amt = 0
+    high_rate_amt = 0
     additional_rate_amt = 0
     annual_income_tax = 0
 
     if annual_gross_earnings <= 50270:
-        basic_rate_amount = annual_taxable_income * 0.2
+        basic_rate_amt = annual_taxable_income * 0.2
     else:
-        basic_rate_amount = (basic_rate - 12570) * 0.2
+        basic_rate_amt = (basic_rate - 12570) * 0.2
     if annual_gross_earnings > basic_rate:
-        if annual_gross_earnings <= higher_rate:
-            higher_rate_amt = (annual_gross_earnings - (37700 + tax_free_amt)) * 0.4
+        if annual_gross_earnings <= high_rate:
+            high_rate_amt = (annual_gross_earnings - 37700) * 0.4
         else:
-            higher_rate_amt = (150000 - 112300) * 0.4
-            additional_rate_amt = (annual_taxable_income - higher_rate) * 0.45
+            high_rate_amt = (150000 - 112300) * 0.4
+            additional_rate_amt = (annual_taxable_income - high_rate) * 0.45
 
-        if annual_gross_earnings > higher_rate:
-            additional_rate_amt = (annual_taxable_income - higher_rate) * 0.45
+        if annual_gross_earnings > high_rate:
+            additional_rate_amt = (annual_taxable_income - high_rate) * 0.45
 
     print("Your Income Tax breakdown is as follows:")
     print(f"Annual taxable income is: £{annual_taxable_income:.2f}")
-    print(f"Basic rate tax deducted is: £{basic_rate_amount:.2f}")
-    print(f"Higher rate tax deducted is: £{higher_rate_amt:.2f}")
+    print(f"Basic rate tax deducted is: £{basic_rate_amt:.2f}")
+    print(f"Higher rate tax deducted is: £{high_rate_amt:.2f}")
     print(f"Additional rate tax deducted is: £{additional_rate_amt:.2f}")
     print(f"Total income tax deducted is: {annual_income_tax:.2f}")
 
-    annual_income_tax = basic_rate_amount + higher_rate_amt + additional_rate_amt
+    annual_income_tax = basic_rate_amt + high_rate_amt + additional_rate_amt
 
     return annual_income_tax
 
