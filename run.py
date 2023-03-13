@@ -1,11 +1,12 @@
 """
 This program allows the user to work out their monthly take home pay
-using their gross earnings
-Income tax and National Insurance rates are relevant to 2022/23 UK tax year
+using their gross earnings.
+Income tax and National Insurance rates used are relevant to 2022/23 tax year.
+It does not take into consideration student loan and pension deductions
 """
 import re
 import texttable as tt
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 
 
 def show_menu():
@@ -43,7 +44,7 @@ def get_tax_code():
     a letter has been entered. Then returns the entered tax code if valid
     """
     entered_tax_code = input('Please enter your UK tax code, it must be four'
-                             'digits followed by a letter \n').strip().lower()
+                             ' digits followed by a letter \n').strip().lower()
     patten = re.compile('\d{4}[a-z]{1}')
     is_tax_code = patten.match(entered_tax_code)
     while is_tax_code is None:
@@ -56,7 +57,7 @@ def get_tax_code():
 
 def extract_tax_free_from_tax_code(tax_code, gross_earnings):
     """
-    Returns the tax free amount
+    Returns the tax free amount using gross earnings and then tax code input
     """
     tax_free_lmt = 100000
     cleaned_tax_code = tax_code[:4]
@@ -132,7 +133,6 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, tax_income):
         if gross_earnings > high_rate:
             higher_amt = (tax_income - high_rate) * 0.45
 
-    # print("Your Income Tax breakdown is as follows:")
     print(f'{color("Your Income Tax breakdown is as follows:", Fore.LIGHTYELLOW_EX)}')
     print(f"Annual taxable income is: £{tax_income:.2f}")
     print(f"Basic rate tax deducted is: £{basic_rate_amt:.2f}")
@@ -206,12 +206,12 @@ def tax_table(gross_earnings, tax_income, income_tax, nat_ins, take_home):
 
 
 def color(text: str, fg, bg=None) -> str:
-    """ 
+    """
     To return some text as colored
     """
-    color = f"{fg}{text}{Style.RESET_ALL}"
+    colored_text = f"{fg}{text}{Style.RESET_ALL}"
 
-    return color if bg is None else bg + color
+    return colored_text if bg is None else bg + color
 
 
 def main():
