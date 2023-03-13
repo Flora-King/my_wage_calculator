@@ -44,14 +44,15 @@ def get_tax_code():
     Asks user to input their tax code. Then validates that four numbers and
     a letter has been entered. Then returns the entered tax code if valid
     """
-    entered_tax_code = input('Please enter your UK tax code, must be four'
-                             ' digits followed by a letter \n').strip().lower()
+    entered_tax_code = input('Please enter your UK tax code; it must be'
+                             ' four digits followed by'
+                             ' a letter \n').strip().lower()
     patten = re.compile('\d{4}[a-z]{1}')
     is_tax_code = patten.match(entered_tax_code)
     while is_tax_code is None:
         print('No, that is not a correctly formatted UK tax code!')
-        entered_tax_code = input('Please enter your UK tax code, must be four'
-                                 ' digits followed by'
+        entered_tax_code = input('Please enter your UK tax code; it must be'
+                                 ' four digits followed by'
                                  ' a letter \n').strip().lower()
         is_tax_code = patten.match(entered_tax_code)
     return entered_tax_code
@@ -90,17 +91,18 @@ def get_taxable_income(gross_income, tax_free_amt):
     """
     tax_income = 0
     tax_free_lmt = 100000
+    x_inc = gross_income
 
-    if gross_income <= tax_free_lmt:
-        tax_income = gross_income - tax_free_amt
+    if x_inc <= tax_free_lmt:
+        tax_income = x_inc - tax_free_amt
     else:
-        tax_income = gross_income - (12570 - ((gross_income - tax_free_lmt) / 2))
-    if gross_income > 100000:
-        if gross_income < 125140:
-            tax_income = gross_income - (12570 - (gross_income - tax_free_lmt) / 2)
+        tax_income = x_inc - (12570 - ((x_inc - tax_free_lmt) / 2))
+    if x_inc > 100000:
+        if x_inc < 125140:
+            tax_income = x_inc - (12570 - (x_inc - tax_free_lmt) / 2)
         else:
-            tax_income = gross_income
-    if gross_income <= tax_free_amt:
+            tax_income = x_inc
+    if x_inc <= tax_free_amt:
         tax_income = 0
 
     return tax_income
