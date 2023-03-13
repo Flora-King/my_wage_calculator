@@ -27,8 +27,7 @@ def show_menu():
         gross_earnings = get_gross_earnings()
         tax_free_amt = extract_tax_free_from_tax_code(tax_code, gross_earnings)
         taxable_income = get_taxable_income(gross_earnings, tax_free_amt)
-        income_tax = ('income_tax_breakdown(tax_free_amt,'
-                      ' gross_earnings, taxable_income)')
+        income_tax = income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income)
         nat_ins = national_insurance_breakdown(gross_earnings)
         take_home = workout_take_home(gross_earnings, income_tax, nat_ins)
         tax_table(gross_earnings, taxable_income, income_tax, nat_ins, take_home)
@@ -84,7 +83,7 @@ def get_taxable_income(gross_earnings, tax_free_amt):
     """
     Returns annual taxable income dependant using input annual gross earnings
     """
-    taxable_income = 0
+    taxable_income = int(0)
     tax_free_lmt = 100000
 
     if gross_earnings <= tax_free_lmt:
@@ -114,7 +113,8 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     high_rate = 150000
     basic_rate_amt = 0
     high_rate_amt = 0
-    income_tax = 0
+    higher_rate_amt = 0
+    income_tax = int()
 
     if gross_earnings <= basic_rate:
         basic_rate_amt = taxable_income * 0.2
@@ -137,10 +137,9 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     print(f"Additional rate tax deducted is: £{higher_rate_amt:.2f}")
     print(f"Total income tax deducted is: {income_tax:.2f}")
 
-    income_tax = ('int(basic_rate_amt) + int(high_rate_amt)'
-                  ' + int(higher_rate_amt)')
+    income_tax = int(basic_rate_amt) + int(high_rate_amt) + int(higher_rate_amt)
 
-    return income_tax
+    return int(income_tax)
 
 
 def national_insurance_breakdown(gross_earnings):
@@ -177,8 +176,8 @@ def workout_take_home(gross_earnings, income_tax, nat_ins):
     Returns take home amount by subtracting the income tax and
     national insurance from gross earnings
     """
-
-    take_home = gross_earnings - income_tax - nat_ins
+    print({"gross_earnings": gross_earnings, "income_tax": income_tax, "nat_ins": nat_ins})
+    take_home = int(gross_earnings) - int(income_tax) - int(nat_ins)
     print(f"Annual take home amount is: £{take_home:.2f}")
 
     return int(take_home)
