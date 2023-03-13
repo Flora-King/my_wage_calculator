@@ -13,7 +13,7 @@ def show_menu():
     """
     print('''Hi there, thank you for choosing our simple UK wage calculator,
     press:
-    1. Workout Monthly Wage
+    1. To workout your monthly take home wage
     2. Quit
     ''')
     instruct = input('').strip().lower()
@@ -41,7 +41,7 @@ def get_tax_code():
     a letter has been entered. Then returns the entered tax code if valid
     """
     entered_tax_code = input('Please enter your UK tax code, it must be four digits followed by a '
-                             'letter').strip().lower()
+                             'letter \n').strip().lower()
     patten = re.compile('\d{4}[a-z]{1}')
     is_tax_code = patten.match(entered_tax_code)
     while is_tax_code is None:
@@ -174,7 +174,6 @@ def workout_take_home(gross_earnings, income_tax, nat_ins):
     Returns take home amount by subtracting the income tax and
     national insurance from gross earnings
     """
-    # print({"gross_earnings": gross_earnings, "income_tax": income_tax, "nat_ins": nat_ins})
     take_home = int(gross_earnings) - int(income_tax) - int(nat_ins)
     print(f"Annual take home amount is: £{take_home:.2f}")
 
