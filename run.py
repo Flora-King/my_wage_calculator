@@ -83,18 +83,16 @@ def get_taxable_income(gross_earnings, tax_free_amt):
     """
     Returns annual taxable income dependant using input annual gross earnings
     """
-    taxable_income = int(0)
+    taxable_income = 0
     tax_free_lmt = 100000
 
     if gross_earnings <= tax_free_lmt:
         taxable_income = gross_earnings - tax_free_amt
     else:
-        taxable_income = ('gross_earnings - (12570 - ((gross_earnings -'
-                          ' tax_free_lmt) / 2))')
+        taxable_income = gross_earnings - (12570 - ((gross_earnings - tax_free_lmt) / 2))
     if gross_earnings > 100000:
         if gross_earnings < 125140:
-            taxable_income = ('gross_earnings - (12570 - ((gross_earnings -'
-                              ' tax_free_lmt) / 2))')
+            taxable_income = gross_earnings - (12570 - (gross_earnings - tax_free_lmt) / 2)
         else:
             taxable_income = gross_earnings
     if gross_earnings <= tax_free_amt:
@@ -176,7 +174,7 @@ def workout_take_home(gross_earnings, income_tax, nat_ins):
     Returns take home amount by subtracting the income tax and
     national insurance from gross earnings
     """
-    print({"gross_earnings": gross_earnings, "income_tax": income_tax, "nat_ins": nat_ins})
+    # print({"gross_earnings": gross_earnings, "income_tax": income_tax, "nat_ins": nat_ins})
     take_home = int(gross_earnings) - int(income_tax) - int(nat_ins)
     print(f"Annual take home amount is: £{take_home:.2f}")
 
