@@ -90,10 +90,12 @@ def get_taxable_income(gross_earnings, tax_free_amt):
     if gross_earnings <= tax_free_lmt:
         tax_income = gross_earnings - tax_free_amt
     else:
-        tax_income = gross_earnings - (12570 - ((gross_earnings - tax_free_lmt) / 2))
+        tax_income = [gross_earnings - (12570 -
+                                        ((gross_earnings - tax_free_lmt) / 2))]
     if gross_earnings > 100000:
         if gross_earnings < 125140:
-            tax_income = gross_earnings - (12570 - (gross_earnings - tax_free_lmt) / 2)
+            tax_income = [gross_earnings -
+                          (12570 - (gross_earnings - tax_free_lmt) / 2)]
         else:
             tax_income = gross_earnings
     if gross_earnings <= tax_free_amt:
