@@ -35,6 +35,7 @@ def show_menu():
         take_home = workout_take_home(gross_earnings, income_tax, nat_ins)
         tax_table(gross_earnings, tax_income, income_tax, nat_ins, take_home)
     if instruct == '2':
+        print('See you another time...')
         exit()
 
 
