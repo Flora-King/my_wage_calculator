@@ -67,9 +67,9 @@ The live version of this project can be found here [UK WAGE CALCULATOR]:https://
 ### Bugs and Errors
 
 #### Solved
-* I encountered a few errors in HTML and CSS during the build phase. For example, I had created a button inside the anchor tag. After seeing the error from the validation report, i adjusted my code.
+* The while loop to valid that entered tax code was correct format, was running non-stop. I eventually stopped it by applying the correct indent to the code
 
-* I encountered issues while building the services section layout. The service types were displaying as "two columns side-by-side and two rows" structure that I needed. I solved this by created an outer container to house all service types plus a container for each service type
+* I encountered issues while trying to eliminate 'too long line code' error. i hdecided to skillfully shorten my variable names as well as function names to ensure the code was not too long
 
 #### Unsolved
 
