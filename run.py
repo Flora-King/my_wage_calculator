@@ -5,6 +5,7 @@ Income tax and National Insurance rates are relevant to 2022/23 UK tax year
 """
 import re
 import texttable as tt
+from colorama import Fore, Back, Style
 
 
 def show_menu():
@@ -131,7 +132,8 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, tax_income):
         if gross_earnings > high_rate:
             higher_amt = (tax_income - high_rate) * 0.45
 
-    print("Your Income Tax breakdown is as follows:")
+    # print("Your Income Tax breakdown is as follows:")
+    print(f'{color("Your Income Tax breakdown is as follows:", Fore.LIGHTYELLOW_EX)}')
     print(f"Annual taxable income is: £{tax_income:.2f}")
     print(f"Basic rate tax deducted is: £{basic_rate_amt:.2f}")
     print(f"Higher rate tax deducted is: £{high_rate_amt:.2f}")
@@ -164,7 +166,7 @@ def national_insurance_breakdown(gross_earnings):
 
     nat_ins = int(basic_ni_amount) + int(higher_ni_amount)
 
-    print("Your National Insurance Breakdown is as follows: ")
+    print(f'{color("Your National Insurance Breakdown is as follows:", Fore.LIGHTYELLOW_EX)}')
     print(f"Primary threshold NI deducted is: £{basic_ni_amount:.2f}")
     print(f"Upper limit NI deducted is: £{higher_ni_amount:.2f}")
     print(f"Total National Insurance deducted is: £{nat_ins:.2f}")
@@ -201,6 +203,15 @@ def tax_table(gross_earnings, tax_income, income_tax, nat_ins, take_home):
     tb.add_row(['National Insurance', nat_ins, monthly_ni])
     tb.add_row(['Take Home', take_home, monthly_take_home])
     print(tb.draw())
+
+
+def color(text: str, fg, bg=None) -> str:
+    """ 
+    To return some text as colored
+    """
+    color = f"{fg}{text}{Style.RESET_ALL}"
+
+    return color if bg is None else bg + color
 
 
 def main():
