@@ -23,8 +23,8 @@ The live version of this project can be found here [UK WAGE CALCULATOR]:https://
 ### Features
 
 * Input validation and error checking
-* You can only choose option 1 or 2 to proceed
-* A wrong option is detected and message with instructions of what to do is presenrted to the user as show below
+    * You can only choose option 1 or 2 to proceed
+    * A wrong option is detected and message with instructions of what to do is presenrted to the user as show below
 
 ![Screenshot 2023-03-13 at 20 11 30](https://user-images.githubusercontent.com/106548101/224821297-21df8dd8-b0ec-4906-b8ee-1974d116fc6e.png)
 
@@ -59,12 +59,14 @@ The live version of this project can be found here [UK WAGE CALCULATOR]:https://
 
 * PEP8 PYTHON VALIDATOR
 
+There are no outstanding error after. validatin gmy code in PEP8 validator
+
 <img width="1123" alt="Screenshot 2023-03-13 at 19 05 46" src="https://user-images.githubusercontent.com/106548101/224804515-9cf1e7fb-6d8f-4a19-a46b-dfacb8431da6.png">
 
-* Accessibility
- * I have validted that accessibility is good. My accessibility report shows a low perfomance report. This is due to the many font awesome icons i have used in this website.
+## Accessibility
+ * Due to the uniqueness of this project, it not possible to test and validate accessibility
 
-### Bugs and Errors
+## Bugs and Errors
 
 #### Solved
 * The while loop to valid that entered tax code was correct format, was running non-stop. I eventually stopped it by applying the correct indent to the code

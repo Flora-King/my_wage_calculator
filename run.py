@@ -15,7 +15,7 @@ def show_menu():
     And validates choice input
     """
     print('''Hi there, thank you for choosing our simple UK wage calculator,
-    press:
+    please press:
     1. To workout your monthly take home wage
     2. Quit
     ''')
@@ -23,7 +23,8 @@ def show_menu():
     possible_answers = ['1', '2']
 
     while instruct not in possible_answers:
-        print('You must enter a 1 or a 2, one of the choices...')
+        print(f'{color("You must enter either 1 or 2 ...", Fore.LIGHTRED_EX)}')
+        # print('You must enter a 1 or a 2, one of the choices...')
         instruct = input('').strip().lower()
     if instruct == '1':
         tax_code = get_tax_code()
@@ -50,7 +51,7 @@ def get_tax_code():
     patten = re.compile(r'\d{4}[a-z]{1}')
     is_tax_code = patten.match(entered_tax_code)
     while is_tax_code is None:
-        print('No, that is not a correctly formatted UK tax code!')
+        print(f'{color("Enter an accurate UK tax code:", Fore.LIGHTRED_EX)}')
         entered_tax_code = input('Please enter your UK tax code; it must be'
                                  ' four digits followed by'
                                  ' a letter \n').strip().lower()
