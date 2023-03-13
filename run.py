@@ -30,7 +30,7 @@ def show_menu():
         gross_earnings = get_gross_earnings()
         tax_free_amt = extract_tax_free_from_tax_code(tax_code, gross_earnings)
         tax_income = get_taxable_income(gross_earnings, tax_free_amt)
-        income_tax = income_tax_breakdown(tax_free_amt, gross_earnings, tax_income)
+        income_tax = tax_breakdown(tax_free_amt, gross_earnings, tax_income)
         nat_ins = national_insurance_breakdown(gross_earnings)
         take_home = workout_take_home(gross_earnings, income_tax, nat_ins)
         tax_table(gross_earnings, tax_income, income_tax, nat_ins, take_home)
@@ -107,7 +107,7 @@ def get_taxable_income(gross_earnings, tax_free_amt):
     return tax_income
 
 
-def income_tax_breakdown(tax_free_amt, gross_earnings, tax_income):
+def tax_breakdown(tax_free_amt, gross_earnings, tax_income):
     """
     Returns annual taxable income using annual gross earnings and tax free
     amount. Then works out the basic tax rate, high tax rate, and Higher
