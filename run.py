@@ -10,6 +10,7 @@ import texttable as tt
 def show_menu():
     """
     Asks user to choose whether to continue using the calculator or quit
+    And validates choice input
     """
     print('''Hi there, thank you for choosing our simple UK wage calculator,
     press:
@@ -18,7 +19,7 @@ def show_menu():
     ''')
     instruct = input('').strip().lower()
     possible_answers = ['1', '2']
-    # validates user input
+
     while instruct not in possible_answers:
         print('You must enter a 1 or a 2, one of the choices...')
         instruct = input('').strip().lower()
@@ -26,11 +27,11 @@ def show_menu():
         tax_code = get_tax_code()
         gross_earnings = get_gross_earnings()
         tax_free_amt = extract_tax_free_from_tax_code(tax_code, gross_earnings)
-        taxable_income = get_taxable_income(gross_earnings, tax_free_amt)
-        income_tax = income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income)
+        tax_income = get_taxable_income(gross_earnings, tax_free_amt)
+        income_tax = income_tax_breakdown(tax_free_amt, gross_earnings, tax_income)
         nat_ins = national_insurance_breakdown(gross_earnings)
         take_home = workout_take_home(gross_earnings, income_tax, nat_ins)
-        tax_table(gross_earnings, taxable_income, income_tax, nat_ins, take_home)
+        tax_table(gross_earnings, tax_income, income_tax, nat_ins, take_home)
     if instruct == '2':
         exit()
 
@@ -40,8 +41,8 @@ def get_tax_code():
     Asks user to input their tax code. Then validates that four numbers and
     a letter has been entered. Then returns the entered tax code if valid
     """
-    entered_tax_code = input('Please enter your UK tax code, it must be four digits followed by a '
-                             'letter \n').strip().lower()
+    entered_tax_code = input('Please enter your UK tax code, it must be four'
+                             'digits followed by a letter \n').strip().lower()
     patten = re.compile('\d{4}[a-z]{1}')
     is_tax_code = patten.match(entered_tax_code)
     while is_tax_code is None:
@@ -83,25 +84,25 @@ def get_taxable_income(gross_earnings, tax_free_amt):
     """
     Returns annual taxable income dependant using input annual gross earnings
     """
-    taxable_income = 0
+    tax_income = 0
     tax_free_lmt = 100000
 
     if gross_earnings <= tax_free_lmt:
-        taxable_income = gross_earnings - tax_free_amt
+        tax_income = gross_earnings - tax_free_amt
     else:
-        taxable_income = gross_earnings - (12570 - ((gross_earnings - tax_free_lmt) / 2))
+        tax_income = gross_earnings - (12570 - ((gross_earnings - tax_free_lmt) / 2))
     if gross_earnings > 100000:
         if gross_earnings < 125140:
-            taxable_income = gross_earnings - (12570 - (gross_earnings - tax_free_lmt) / 2)
+            tax_income = gross_earnings - (12570 - (gross_earnings - tax_free_lmt) / 2)
         else:
-            taxable_income = gross_earnings
+            tax_income = gross_earnings
     if gross_earnings <= tax_free_amt:
-        taxable_income = 0
+        tax_income = 0
 
-    return taxable_income
+    return tax_income
 
 
-def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
+def income_tax_breakdown(tax_free_amt, gross_earnings, tax_income):
     """
     Returns annual taxable income using annual gross earnings and tax free
     amount. Then works out the basic tax rate, high tax rate, and Higher
@@ -111,11 +112,11 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
     high_rate = 150000
     basic_rate_amt = 0
     high_rate_amt = 0
-    higher_rate_amt = 0
+    higher_amt = 0
     income_tax = int()
 
     if gross_earnings <= basic_rate:
-        basic_rate_amt = taxable_income * 0.2
+        basic_rate_amt = tax_income * 0.2
     else:
         basic_rate_amt = (basic_rate - tax_free_amt) * 0.2
     if gross_earnings > basic_rate:
@@ -123,19 +124,19 @@ def income_tax_breakdown(tax_free_amt, gross_earnings, taxable_income):
             high_rate_amt = (gross_earnings - 37700) * 0.4
         else:
             high_rate_amt = (high_rate - 112300) * 0.4
-            higher_rate_amt = (taxable_income - high_rate) * 0.45
+            higher_amt = (tax_income - high_rate) * 0.45
 
         if gross_earnings > high_rate:
-            higher_rate_amt = (taxable_income - high_rate) * 0.45
+            higher_amt = (tax_income - high_rate) * 0.45
 
     print("Your Income Tax breakdown is as follows:")
-    print(f"Annual taxable income is: £{taxable_income:.2f}")
+    print(f"Annual taxable income is: £{tax_income:.2f}")
     print(f"Basic rate tax deducted is: £{basic_rate_amt:.2f}")
     print(f"Higher rate tax deducted is: £{high_rate_amt:.2f}")
-    print(f"Additional rate tax deducted is: £{higher_rate_amt:.2f}")
+    print(f"Additional rate tax deducted is: £{higher_amt:.2f}")
     print(f"Total income tax deducted is: {income_tax:.2f}")
 
-    income_tax = int(basic_rate_amt) + int(high_rate_amt) + int(higher_rate_amt)
+    income_tax = int(basic_rate_amt) + int(high_rate_amt) + int(higher_amt)
 
     return int(income_tax)
 
@@ -180,12 +181,12 @@ def workout_take_home(gross_earnings, income_tax, nat_ins):
     return int(take_home)
 
 
-def tax_table(gross_earnings, taxable_income, income_tax, nat_ins, take_home):
+def tax_table(gross_earnings, tax_income, income_tax, nat_ins, take_home):
     """
     Returns all values breakdown assembled in a texttable
     """
     month_gross_earnings = gross_earnings / 12
-    month_taxable_income = taxable_income / 12
+    month_taxable_income = tax_income / 12
     monthly_income_tax = income_tax / 12
     monthly_ni = nat_ins / 12
     monthly_take_home = take_home / 12
@@ -193,7 +194,7 @@ def tax_table(gross_earnings, taxable_income, income_tax, nat_ins, take_home):
     tb = tt.Texttable()
     tb.header(["Item", "Yearly £ ", "Monthly £ "])
     tb.add_row(["Gross Earnings", gross_earnings, month_gross_earnings])
-    tb.add_row(["Taxable Income", taxable_income, month_taxable_income])
+    tb.add_row(["Taxable Income", tax_income, month_taxable_income])
     tb.add_row(['Income Tax', income_tax, monthly_income_tax])
     tb.add_row(['National Insurance', nat_ins, monthly_ni])
     tb.add_row(['Take Home', take_home, monthly_take_home])
