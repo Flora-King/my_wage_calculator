@@ -35,6 +35,7 @@ def show_menu():
         nat_ins = national_insurance_breakdown(gross_income)
         take_home = workout_take_home(gross_income, income_tax, nat_ins)
         tax_table(gross_income, tax_income, income_tax, nat_ins, take_home)
+        show_menu()
     if instruct == '2':
         print('See you another time. Goodbye!')
         exit()
@@ -192,13 +193,14 @@ def tax_table(gross_income, tax_income, income_tax, nat_ins, take_home):
     """
     Returns all values breakdown assembled in a texttable
     """
-    month_gross_earnings = gross_income / 12
-    month_taxable_income = int(tax_income) / 12
-    monthly_income_tax = income_tax / 12
-    monthly_ni = nat_ins / 12
-    monthly_take_home = take_home / 12
+    month_gross_earnings = str(round((gross_income / 12), 2))
+    month_taxable_income = str(int(tax_income / 12))
+    monthly_income_tax = str(round((income_tax / 12), 2))
+    monthly_ni = str(round((nat_ins / 12), 2))
+    monthly_take_home = str(round((take_home / 12), 2))
 
     tb = tt.Texttable()
+    tb.set_cols_dtype(["t", "t", "t"])
     tb.header(["Item", "Yearly £ ", "Monthly £ "])
     tb.add_row(["Gross Earnings", gross_income, month_gross_earnings])
     tb.add_row(["Taxable Income", tax_income, month_taxable_income])
