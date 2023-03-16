@@ -42,7 +42,7 @@ The live version of this project can be found here [UK WAGE CALCULATOR]:https://
 * A breakdown of the user's National Insurance is also displayed 
   * This contains details the different amount of national insurance deducted per in accordance to the National Insurance rate/band
 
-* Lastly the users take home is also presented
+* The users take home is also presented
 * The totals for the 'Income Tax', 'National Insurance', and 'Take Home' amounts are then displayed in a table.
     * This table also breaks down the results to show a yearly amount and a monthly amount
 
@@ -102,6 +102,9 @@ Once the app was successfully deployed, i started to run the program found here 
 
 ## Credits
 * Code Institute - my Mentor was very helpful, reassuring and very patient.
+    * also my mentor helped me with this specific code: 
+                                                        patten = re.compile(r'\d{4}[a-z]{1}')
+                                                        is_tax_code = patten.match(entered_tax_code)
 * Code Institute - Tutors were also very helpful.
 * Reffered to documentation and examples on W3schools website.
 * Reffered to stackoverflow website for various code query examples and to solve some errors i encountered.

@@ -49,6 +49,7 @@ def get_tax_code():
     entered_tax_code = input('Please enter your UK tax code; it must be'
                              ' four digits followed by'
                              ' a letter \n').strip().lower()
+    # my mentor helped with the patten code below
     patten = re.compile(r'\d{4}[a-z]{1}')
     is_tax_code = patten.match(entered_tax_code)
     while is_tax_code is None:
