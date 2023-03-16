@@ -1,14 +1,16 @@
 # UK Wage Calculator
 
-The UK Wage Calculator program allows the user to work out their monthly take home pay using by entering their annual gross earnings and tax code.
+The UK Wage Calculator program allows the user to work out their monthly take home pay using input gross annual earnings and UK tax code.
 
-The income tax and National Insurance rates used are only relevant to 2022/23 tax year. This program does not calculate student loan and pension deductions.
+The income tax and National Insurance rates used are only relevant to 2022/23 UK tax year. This program does not calculate student loan or pension deductions.
 
 Users will be able to see the income tax breakdown as well as national insurance breakdown.
+
 
 The live version of this project can be found here [UK WAGE CALCULATOR]:https://uk-wage-calculator.herokuapp.com/
 
 ![UK WAGE CALCULATOR PROGRAM](https://user-images.githubusercontent.com/106548101/224796092-bae7ec2e-b429-4572-bd0d-b11eef6170a6.png)
+
 
 ## How to use the UK Wage Calculator
 
@@ -17,7 +19,7 @@ The live version of this project can be found here [UK WAGE CALCULATOR]:https://
 
 ![Screenshot 2023-03-13 at 20 06 50](https://user-images.githubusercontent.com/106548101/224820144-66c9335a-df8f-4189-a8e7-fe726077399e.png)
 
-* However if the user chooses option 1, then the program proceeds to ask the user to enter their tax code and gross earnings
+* However if the user chooses option 1, then the program proceeds requesting the user to input their tax code and gross annual earnings
 
 ![Screenshot 2023-03-13 at 20 08 23](https://user-images.githubusercontent.com/106548101/224820434-0ec1408c-227e-4c16-b0fd-33a769fba02c.png)
 
@@ -36,9 +38,9 @@ The live version of this project can be found here [UK WAGE CALCULATOR]:https://
 ## Results Display
 
 * A breakdown of the user's income tax is displayed 
-    * this contains the different amount of income tax deducted in accordance to the income tax rate/band
+    * This breakdown details the different amount of income tax deducted in accordance to the income tax rate/band
 * A breakdown of the user's National Insurance is also displayed 
-  * this contains the different amount of national insurance deducted per in accordance to the National Insurance rate/band
+  * This contains details the different amount of national insurance deducted per in accordance to the National Insurance rate/band
 
 * Lastly the users take home is also presented
 * The totals for the 'Income Tax', 'National Insurance', and 'Take Home' amounts are then displayed in a table.
