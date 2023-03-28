@@ -4,6 +4,7 @@ using their gross earnings.
 Income tax and National Insurance rates used are relevant to 2022/23 tax year.
 This program does not calculate student loan and pension deductions.
 """
+
 import re
 import texttable as tt
 from colorama import Fore, Style
@@ -14,6 +15,7 @@ def show_menu():
     Asks user to choose whether to continue using the calculator or quit
     And validates choice input
     """
+
     print('''Hi there, thank you for choosing our simple UK wage calculator,
     please press:
     1. To workout your monthly take home wage
@@ -46,6 +48,7 @@ def get_tax_code():
     Asks user to input their tax code. Then validates that four numbers and
     a letter has been entered. Then returns the entered tax code if valid
     """
+
     entered_tax_code = input('Please enter your UK tax code; it must be'
                              ' four digits followed by'
                              ' a letter \n').strip().lower()
@@ -65,6 +68,7 @@ def extract_tax_free_from_tax_code(tax_code, gross_income):
     """
     Returns the tax free amount using gross earnings and then tax code input
     """
+
     tax_free_lmt = 100000
     cleaned_tax_code = tax_code[:4]
     tax_free_amt = int(cleaned_tax_code) * 10
@@ -84,6 +88,7 @@ def get_gross_earnings():
     """
     Asks user to input annual gross earnings
     """
+
     gross_income = int(input("Enter your gross earnings here: \n"))
     return gross_income
 
@@ -92,6 +97,7 @@ def get_taxable_income(gross_income, tax_free_amt):
     """
     Returns annual taxable income dependant using input annual gross earnings
     """
+
     tax_income = 0
     tax_free_lmt = 100000
     x_inc = gross_income
@@ -117,6 +123,7 @@ def tax_breakdown(tax_free_amt, gross_income, tax_income):
     amount. Then works out the basic tax rate, high tax rate, and Higher
     tax rate. And finally returns total tax deducted.
     """
+
     basic_rate = 50270
     high_rate = 150000
     basic_rate_amt = 0
@@ -157,6 +164,7 @@ def national_insurance_breakdown(gross_income):
     - 12.73% NI. tax over 12570 to 50270 per year
     - 2.73% NI tax over 50270 gross earnings per year
     """
+
     lower_ni_limit = 12570
     basic_ni_limit = 50270
     basic_ni_amount = 0
@@ -184,6 +192,7 @@ def workout_take_home(gross_income, income_tax, nat_ins):
     Returns take home amount by subtracting the income tax and
     national insurance from gross earnings
     """
+
     take_home = int(gross_income) - int(income_tax) - int(nat_ins)
     print(f'{color("Take home is:", Fore.LIGHTYELLOW_EX)} £{take_home:.2f}')
 
@@ -194,6 +203,7 @@ def tax_table(gross_income, tax_income, income_tax, nat_ins, take_home):
     """
     Returns all values breakdown assembled in a texttable
     """
+
     month_gross_earnings = str(round((gross_income / 12), 2))
     month_taxable_income = str(int(tax_income / 12))
     monthly_income_tax = str(round((income_tax / 12), 2))
@@ -213,8 +223,9 @@ def tax_table(gross_income, tax_income, income_tax, nat_ins, take_home):
 
 def color(text: str, fg, bg=None) -> str:
     """
-    To return some text as colored
+    Return specified text in color
     """
+
     colored_text = f"{fg}{text}{Style.RESET_ALL}"
 
     return colored_text if bg is None else bg + color
@@ -224,6 +235,7 @@ def main():
     """
     Runs all program functions
     """
+
     show_menu()
 
 
