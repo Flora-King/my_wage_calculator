@@ -1,18 +1,18 @@
-# UK Wage Calculator
+# MY Wage Calculator
 
-The UK Wage Calculator program allows the user to work out their monthly take home pay using input gross annual earnings and UK tax code.
+The My Wage Calculator program allows the user to work out their monthly take home pay using input gross annual earnings and UK tax code.
 
 The income tax and National Insurance rates used are only relevant to 2022/23 UK tax year. This program does not calculate student loan or pension deductions.
 
 Users will be able to see the income tax breakdown as well as national insurance breakdown.
 
 
-The live version of this project can be found here [UK WAGE CALCULATOR]:https://uk-wage-calculator.herokuapp.com/
+The live version of this project can be found here [MY WAGE CALCULATOR]:https://uk-wage-calculator.herokuapp.com/
 
-![UK WAGE CALCULATOR PROGRAM](https://user-images.githubusercontent.com/106548101/224796092-bae7ec2e-b429-4572-bd0d-b11eef6170a6.png)
+![MY WAGE CALCULATOR PROGRAM](https://user-images.githubusercontent.com/106548101/224796092-bae7ec2e-b429-4572-bd0d-b11eef6170a6.png)
 
 
-## How to use the UK Wage Calculator
+## How to use the My Wage Calculator
 
 * Upon running the program, the user can choose to proceed using the calculator by pressing 1 or quit by pressing 2
 * If option 2 is selected, the program ends and this message ['See you another time. Goodbye!'] is presented to the user 
@@ -98,7 +98,7 @@ To publish/deploy my project, i followed these steps:
 6 Then deloyed app manually 
 
 
-Once the app was successfully deployed, i started to run the program found here [UK WAGE CALCULATOR]: https://uk-wage-calculator.herokuapp.com/
+Once the app was successfully deployed, i started to run the program found here [MY WAGE CALCULATOR]: https://uk-wage-calculator.herokuapp.com/
 
 ## Credits
 * Code Institute - my Mentor was very helpful, reassuring and very patient.
